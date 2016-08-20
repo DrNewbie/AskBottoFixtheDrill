@@ -55,7 +55,6 @@ function BotFixDrill:Animal_Do_Fixing(ai_unit, booloh)
 	ai_unit:brain():set_objective(objective)
 	if not booloh then
 		ai_unit:brain():action_request(objective.action)
-		ai_unit:interaction():interact_start(other_unit)
 	end
 end
 

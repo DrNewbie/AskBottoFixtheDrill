@@ -23,7 +23,10 @@ function PlayerStandard:_get_intimidation_action(prime_target, ...)
 				BotFixDrill.target_drill_table[_key] = {drill = drill, fixer = prime_target.unit, start_time = math.floor(TimerManager:game():time())+10}
 				BotFixDrill:Animal_Do_Fixing(prime_target.unit)
 			else
-				BotFixDrill:Animal_Do_Fixing(prime_target.unit, true)
+				drill = Get_All_Drill_Unit_In_Sphere(self._unit:position(), 200)
+				if drill then
+					BotFixDrill:Animal_Do_Fixing(prime_target.unit, true)
+				end
 			end
 		end
 	end
