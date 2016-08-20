@@ -16,7 +16,6 @@ function PlayerStandard:_get_intimidation_action(prime_target, ...)
 	local voice_type, plural, prime_target = _BotFixDrill_PlayerStandard_get_intimidation_action(self, prime_target, ...)
 	if (voice_type == "come" or voice_type == "boost") and prime_target and prime_target.unit and prime_target.unit_type == 2 then
 		local _key = prime_target.unit:name():key()
-		BotFixDrill:Animal_Do_Fixing(prime_target.unit, true)
 		if not BotFixDrill.target_drill_table[_key] then
 			local drill = Get_All_Drill_Unit_In_Sphere(prime_target.unit:position(), 200)
 			if drill and prime_target.unit:brain()._current_logic_name ~= "disabled" then
