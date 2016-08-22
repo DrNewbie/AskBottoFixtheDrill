@@ -17,11 +17,14 @@ Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
 			for k, v in pairs(BotFixDrill.target_drill_table) do
 				if type(v.start_time) == "number" and v.start_time < t or
 					not v.drill or not v.drill:base() or not v.drill:base()._jammed or 
-					(v.fixer and alive(v.fixer) and v.fixer:brain()._current_logic_name == "disabled") then
+					(v.fixer and alive(v.fixer) and v.fixer:brain() and v.fixer:brain()._current_logic_name == "disabled") then
 					if v.drill and v.drill:base() and v.drill:base()._jammed then
-						v.drill:timer_gui():set_jammed(false)
-						v.drill:interaction():set_active(false, true)
-						v.drill:interaction():check_for_upgrade()
+						if v.drill:timer_gui() then
+							v.drill:timer_gui():set_jammed(false)
+						end
+						if v.drill:interaction() then
+							v.drill:interaction():set_active(false, true)
+						end
 					end
 					BotFixDrill:Animal_End_Fixing(v.fixer)
 					BotFixDrill.target_drill_table[k] = {}
