@@ -28,6 +28,9 @@ function PlayerStandard:_get_intimidation_action(prime_target, ...)
 					BotFixDrill:Animal_Do_Fixing(prime_target.unit, true)
 				end
 			end
+		else
+			BotFixDrill:Animal_End_Fixing(prime_target.unit)
+			BotFixDrill.target_drill_table[_key] = {}
 		end
 	end
 	return voice_type, plural, prime_target
