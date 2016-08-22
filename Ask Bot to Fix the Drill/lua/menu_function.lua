@@ -4,6 +4,10 @@ end
 
 _G.BotFixDrill = _G.BotFixDrill or {}
 
+BotFixDrill.Fix_Distance = 200
+
+BotFixDrill.target_drill_table = BotFixDrill.target_drill_table or {}
+
 function BotFixDrill:Animal_Do_Fixing(ai_unit, booloh)
 	if not ai_unit or not alive(ai_unit) or not ai_unit:brain() then
 		return
@@ -81,4 +85,27 @@ function BotFixDrill:Animal_End_Fixing(ai_unit)
 			}
 		}
 	})
+end
+
+function BotFixDrill:Bot_Fix_This_Drill(ai_unit, drill_unit)
+	for k, v in pairs(BotFixDrill.target_drill_table) do
+		if v.drill == drill_unit then
+			return
+		end
+	end
+	ai_unit:movement():set_rotation(drill_unit:rotation())
+	BotFixDrill.target_drill_table[ai_unit:name():key()] = {drill = drill_unit, fixer = ai_unit, start_time = math.floor(TimerManager:game():time())+10}
+	BotFixDrill:Animal_Do_Fixing(ai_unit)
+end
+
+function BotFixDrill:Get_All_Drill_Unit_In_Sphere(pos, area)
+	local _unit = nil
+	local _Unit_In_Sphere = World:find_units("sphere", pos, area) or {}
+	for _, data in pairs(_Unit_In_Sphere) do
+		if data and alive(data) and data:base() and data:base()._jammed then
+			_unit = data
+			break
+		end
+	end  
+	return _unit
 end

@@ -1,10 +1,11 @@
 {
 	"name" : "Ask Bot to Fix the Drill",
 	"author" : "Dr_Newbie",
-	"version" : "beta.1.3",
+	"version" : "beta.1.4",
 	"hooks" : [
-		{ "hook_id" : "lib/managers/localizationmanager", "script_path" : "lua/timer.lua" },
+		{"hook_id" : "lib/managers/localizationmanager", "script_path" : "lua/timer.lua"},
 		{"hook_id" : "lib/managers/localizationmanager", "script_path" : "lua/menu_function.lua"},
-		{"hook_id" : "lib/units/beings/player/states/playerstandard", "script_path" : "lua/shout_to_fix_drill.lua"}
+		{"hook_id" : "lib/units/beings/player/states/playerstandard", "script_path" : "lua/shout_to_fix_drill.lua"},
+		{"hook_id" : "lib/units/props/timergui", "script_path" : "lua/jammed_event.lua"}
 	]
 }

@@ -8,8 +8,6 @@ if not BotFixDrill then
 	return
 end
 
-BotFixDrill.target_drill_table = BotFixDrill.target_drill_table or {}
-
 local _t_delay = 0
 
 Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
