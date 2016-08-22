@@ -87,11 +87,26 @@ function BotFixDrill:Animal_End_Fixing(ai_unit)
 	})
 end
 
+function BotFixDrill:Check_Is_He_AI(unit)
+	local _AIs = managers.groupai:state():all_AI_criminals() or {}
+	if _AIs then
+		for _, data in pairs(_AIs) do
+			if data.unit and alive(data.unit) and data.unit == unit then
+				return true
+			end
+		end
+	end
+	return false
+end
+
 function BotFixDrill:Bot_Fix_This_Drill(ai_unit, drill_unit)
 	for k, v in pairs(BotFixDrill.target_drill_table) do
 		if v.drill == drill_unit then
 			return
 		end
+	end
+	if not BotFixDrill:Check_Is_He_AI(ai_unit) then
+		return
 	end
 	ai_unit:movement():set_rotation(drill_unit:rotation())
 	BotFixDrill.target_drill_table[ai_unit:name():key()] = {drill = drill_unit, fixer = ai_unit, start_time = math.floor(TimerManager:game():time())+10}
