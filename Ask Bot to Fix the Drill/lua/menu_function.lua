@@ -4,7 +4,7 @@ end
 
 _G.BotFixDrill = _G.BotFixDrill or {}
 
-BotFixDrill.Fix_Distance = 200
+BotFixDrill.Fix_Distance = 300
 
 BotFixDrill.target_drill_table = BotFixDrill.target_drill_table or {}
 
@@ -108,8 +108,8 @@ function BotFixDrill:Bot_Fix_This_Drill(ai_unit, drill_unit)
 	if not BotFixDrill:Check_Is_He_AI(ai_unit) then
 		return
 	end
-	ai_unit:movement():set_rotation(drill_unit:rotation())
-	BotFixDrill.target_drill_table[ai_unit:name():key()] = {drill = drill_unit, fixer = ai_unit, start_time = math.floor(TimerManager:game():time())+10}
+	ai_unit:movement():set_rotation(Rotation:look_at(ai_unit:position(), drill_unit:position(),  math.UP))
+	BotFixDrill.target_drill_table[ai_unit:name():key()] = {drill = drill_unit, fixer = ai_unit, start_time = math.floor(TimerManager:game():time())+15}
 	BotFixDrill:Animal_Do_Fixing(ai_unit)
 end
 

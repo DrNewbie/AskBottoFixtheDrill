@@ -15,6 +15,10 @@ Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
 		if t > _t_delay then
 			_t_delay = math.round(t) + 1
 			for k, v in pairs(BotFixDrill.target_drill_table) do
+				if type(v.start_time) ~= "number" then
+					BotFixDrill:Animal_End_Fixing(v.fixer)
+					BotFixDrill.target_drill_table[k] = {}
+				end
 				if type(v.start_time) == "number" and v.start_time < t or
 					not v.drill or not v.drill:base() or not v.drill:base()._jammed or 
 					(v.fixer and alive(v.fixer) and v.fixer:brain() and v.fixer:brain()._current_logic_name == "disabled") then
