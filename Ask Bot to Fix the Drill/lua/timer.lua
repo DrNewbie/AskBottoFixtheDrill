@@ -16,6 +16,9 @@ Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
 			_t_delay = math.round(t) + 1
 			for k, v in pairs(BotFixDrill.target_drill_table) do
 				if type(v.start_time) ~= "number" then
+					if v.fixer and alive(v.fixer) and v.should_stay then
+						v.fixer:movement():set_should_stay(v.should_stay)
+					end
 					BotFixDrill:Animal_End_Fixing(v.fixer)
 					BotFixDrill.target_drill_table[k] = {}
 				end
@@ -29,6 +32,9 @@ Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
 						if v.drill:interaction() then
 							v.drill:interaction():set_active(false, true)
 						end
+					end
+					if v.fixer and alive(v.fixer) and v.should_stay then
+						v.fixer:movement():set_should_stay(v.should_stay)
 					end
 					BotFixDrill:Animal_End_Fixing(v.fixer)
 					BotFixDrill.target_drill_table[k] = {}

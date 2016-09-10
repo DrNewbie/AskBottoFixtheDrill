@@ -109,7 +109,8 @@ function BotFixDrill:Bot_Fix_This_Drill(ai_unit, drill_unit)
 		return
 	end
 	ai_unit:movement():set_rotation(Rotation:look_at(ai_unit:position(), drill_unit:position(),  math.UP))
-	BotFixDrill.target_drill_table[ai_unit:name():key()] = {drill = drill_unit, fixer = ai_unit, start_time = math.floor(TimerManager:game():time())+15}
+	BotFixDrill.target_drill_table[ai_unit:name():key()] = {drill = drill_unit, fixer = ai_unit, start_time = math.floor(TimerManager:game():time())+15, should_stay = ai_unit:movement()._should_stay}
+	ai_unit:movement():set_should_stay(false)
 	BotFixDrill:Animal_Do_Fixing(ai_unit)
 end
 
