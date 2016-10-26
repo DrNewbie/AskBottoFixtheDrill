@@ -25,9 +25,9 @@ Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
 					end
 				end
 				if (type(v.start_time) == "number" and v.start_time < _now_t) or
-					(not v.drill or not v.drill:base() or not v.drill:base()._jammed) or 
+					(not v.drill or not alive(v.drill) or not v.drill:base() or not v.drill:base()._jammed) or 
 					(v.fixer and alive(v.fixer) and v.fixer:brain() and v.fixer:brain()._current_logic_name == "disabled") then
-					if v.drill and v.drill:base() and v.drill:base()._jammed and v.fixer and alive(v.fixer) and v.fixer:brain()._current_logic_name ~= "disabled" then
+					if v.drill and alive(v.drill) and v.drill:base() and v.drill:base()._jammed and v.fixer and alive(v.fixer) and v.fixer:brain() and v.fixer:brain()._current_logic_name ~= "disabled" then
 						if v.drill:timer_gui() then
 							v.drill:timer_gui():set_jammed(false)
 						end
