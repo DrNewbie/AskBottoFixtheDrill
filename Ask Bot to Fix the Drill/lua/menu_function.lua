@@ -8,11 +8,19 @@ BotFixDrill.Fix_Distance = 300
 
 BotFixDrill.target_drill_table = BotFixDrill.target_drill_table or {}
 
-function BotFixDrill:Animal_Do_Fixing(ai_unit, booloh)
-	if not ai_unit or not alive(ai_unit) or not ai_unit:brain() then
+function BotFixDrill:Animal_Do_Fixing(ai_unit, booloh, drill_unit)
+	local check_is_unit_okay = function(check_unit)
+		if not check_unit or not alive(check_unit) or not check_unit.position or not check_unit.movement or not check_unit:movement().nav_tracker or not check_unit:movement():nav_tracker().nav_segment then
+			return false
+		end
+		return true
+	end
+	if not drill_unit or not alive(drill_unit) or not drill_unit.position then
 		return
 	end
-	local other_unit = managers.player:player_unit()
+	if not check_is_unit_okay(ai_unit) then
+		return
+	end
 	local objective_type, objective_action
 	objective_type = "revive"
 	objective_action = "revive"
@@ -34,10 +42,11 @@ function BotFixDrill:Animal_Do_Fixing(ai_unit, booloh)
 	}
 	local objective = {
 		type = "revive",
-		follow_unit = other_unit,
+		follow_unit = ai_unit,
 		called = true,
 		destroy_clbk_key = false,
-		nav_seg = other_unit:movement():nav_tracker():nav_segment(),
+		nav_seg = ai_unit:movement():nav_tracker():nav_segment(),
+		pos = drill_unit:position(),
 		scan = true,
 		action = {
 			type = "act",
@@ -111,7 +120,7 @@ function BotFixDrill:Bot_Fix_This_Drill(ai_unit, drill_unit)
 	ai_unit:movement():set_rotation(Rotation:look_at(ai_unit:position(), drill_unit:position(),  math.UP))
 	BotFixDrill.target_drill_table[ai_unit:name():key()] = {drill = drill_unit, fixer = ai_unit, start_time = math.round(TimerManager:game():time())+15, should_stay = ai_unit:movement()._should_stay}
 	ai_unit:movement():set_should_stay(false)
-	BotFixDrill:Animal_Do_Fixing(ai_unit)
+	BotFixDrill:Animal_Do_Fixing(ai_unit, _, drill_unit)
 end
 
 function BotFixDrill:Get_All_Drill_Unit_In_Sphere(pos, area)

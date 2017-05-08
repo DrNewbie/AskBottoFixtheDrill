@@ -15,6 +15,11 @@ Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
 		if t > _t_delay then
 			_t_delay = math.round(t) + 1
 			local _now_t = math.round(TimerManager:game():time())
+			for k, v in pairs(BotFixDrill.shout2cancel) do
+				if v and type(v) == 'number' and _now_t > v then
+					BotFixDrill.shout2cancel[k] = nil
+				end
+			end
 			for k, v in pairs(BotFixDrill.target_drill_table) do
 				if type(v.start_time) ~= "number" then
 					BotFixDrill:Animal_End_Fixing(v.fixer)

@@ -16,7 +16,7 @@ Hooks:PreHook(TimerGui, "update", "BotFixDrill_TimerGui_update", function(tim, u
 		local _AIs = managers.groupai:state():all_AI_criminals() or {}
 		if _AIs then
 			for _, data in pairs(_AIs) do
-				if data.unit and alive(data.unit) and data.unit:brain()._current_logic_name ~= "disabled" then
+				if data.unit and alive(data.unit) and data.unit:brain()._current_logic_name ~= "disabled" and not BotFixDrill.shout2cancel[data.unit:name():key()] then
 					local drill = BotFixDrill:Get_All_Drill_Unit_In_Sphere(data.unit:position(), BotFixDrill.Fix_Distance)
 					local _dd = BotFixDrill.target_drill_table[data.unit:name():key()]
 					if drill and (not _dd or #_dd <= 0 or not _dd.start_time) then
