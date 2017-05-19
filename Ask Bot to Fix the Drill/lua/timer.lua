@@ -29,6 +29,20 @@ Hooks:Add("GameSetupUpdate", "BotFixDrillGameSetupUpdate", function(t, dt)
 						v.fixer:movement():set_should_stay(v.should_stay)
 					end
 				end
+				local _fixer_isok = false
+				if v.fixer and alive(v.fixer) and v.fixer.character_damage and v.fixer:character_damage().dead and not v.fixer:character_damage():dead() and v.fixer:character_damage().revive then
+					if (v.fixer:character_damage().down_time and v.fixer:character_damage():down_time()) or 
+						(v.fixer:character_damage().arrested and v.fixer:character_damage():arrested()) or 
+						(v.fixer:character_damage().incapacitated and v.fixer:character_damage():incapacitated()) or 
+						(v.fixer:character_damage().need_revive and v.fixer:character_damage():need_revive()) then
+						_fixer_isok = true
+					end
+				end
+				if not _fixer_isok then
+					BotFixDrill:Animal_End_Fixing(v.fixer)
+					BotFixDrill.target_drill_table[k] = {}
+					BotFixDrill.target_drill_table[k] = nil					
+				end
 				if (type(v.start_time) == "number" and v.start_time < _now_t) or
 					(not v.drill or not alive(v.drill) or not v.drill:base() or not v.drill:base()._jammed) or 
 					(v.fixer and alive(v.fixer) and v.fixer:brain() and v.fixer:brain()._current_logic_name == "disabled") then
