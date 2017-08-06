@@ -127,7 +127,7 @@ function BotFixDrill:Get_All_Drill_Unit_In_Sphere(pos, area)
 	local _unit = nil
 	local _Unit_In_Sphere = World:find_units("sphere", pos, area, managers.slot:get_mask("all")) or {}
 	for _, data in pairs(_Unit_In_Sphere) do
-		if data and alive(data) and data:base() and data:base()._jammed and data:interaction() then
+		if data and alive(data) and data.base and data:base()._jammed and data.interaction then
 			local _name = tostring(data:interaction().tweak_data)
 			local _nonfix = {
 				huge_lance = true,
