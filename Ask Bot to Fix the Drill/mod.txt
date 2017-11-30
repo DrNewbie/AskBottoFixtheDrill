@@ -3,27 +3,23 @@
 	"description": "Ask Bot to Fix the Drill",
 	"author": "Dr_Newbie",
 	"contact": "http://modwork.shop/17260",
-	"version": "8",
+	"version": "9",
 	"priority": 1,
 	"image": "logo.png",
 	"color": "0 0 0",
 	"blt_version": 2,
 	"hooks": [
 		{
-			"hook_id": "lib/managers/localizationmanager",
-			"script_path": "lua/timer.lua"
-		},
-		{
-			"hook_id": "lib/managers/localizationmanager",
-			"script_path": "lua/menu_function.lua"
-		},
-		{
 			"hook_id": "lib/units/beings/player/states/playerstandard",
-			"script_path": "lua/shout_to_fix_drill.lua"
+			"script_path": "lua/ask_active.lua"
 		},
 		{
 			"hook_id": "lib/units/props/timergui",
 			"script_path": "lua/jammed_event.lua"
+		},
+		{
+			"hook_id": "lib/managers/localizationmanager",
+			"script_path": "Base.lua"
 		}
 	]
 }
