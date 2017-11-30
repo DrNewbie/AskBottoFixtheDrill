@@ -27,6 +27,10 @@ Hooks:PostHook(TimerGui, "init", "F_"..Idstring("BotFixDrill_TimerGui_init"):key
 	end
 end)
 
+_G.BotFixDrill = _G.BotFixDrill or {}
+
+BotFixDrill.Units = BotFixDrill.Units or {}
+
 Hooks:PreHook(TimerGui, "update", "F_"..Idstring("BotFixDrill_TimerGui_update"):key(), function(tim, unit, t, dt)
 	if not tim._botfix or _delay_t > t then
 		return
@@ -51,12 +55,18 @@ Hooks:PreHook(TimerGui, "update", "F_"..Idstring("BotFixDrill_TimerGui_update"):
 		if _AIs then
 			for _, data in pairs(_AIs) do
 				if data.unit and alive(data.unit) and data.unit:brain()._current_logic_name ~= "disabled" then
-					tim._botfix_t = t + (tweak_data.interaction[itname].timer or 25) + math.round(mvector3.distance(tim._unit:position(), data.unit:position())/100) + 5
-					CustomWaypoints:PlaceMyWaypoint(tim._unit:position())
-					AskBot2Stealth_Runner = data.unit
-					DelayedCalls:Add("F_"..Idstring("BotFixDrill_Run"..tostring(tim._unit:key())):key(), 0.5, function()
-						PlyStandard:_start_action_intimidate_alt(t, true)
-					end)
+					BotFixDrill.Units[data.unit:key()] = BotFixDrill.Units[data.unit:key()] or 0
+					if BotFixDrill.Units[data.unit:key()] > t then
+						
+					else
+						tim._botfix_t = t + (tweak_data.interaction[itname].timer or 25) + math.round(mvector3.distance(tim._unit:position(), data.unit:position())/100) + 5
+						BotFixDrill.Units[data.unit:key()] = tim._botfix_t + 3
+						CustomWaypoints:PlaceMyWaypoint(tim._unit:position())
+						AskBot2Stealth_Runner = data.unit
+						DelayedCalls:Add("F_"..Idstring("BotFixDrill_Run"..tostring(tim._unit:key())):key(), 0.5, function()
+							PlyStandard:_start_action_intimidate_alt(t, true)
+						end)					
+					end
 				end
 			end
 		end
