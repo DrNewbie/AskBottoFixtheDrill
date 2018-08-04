@@ -3,9 +3,8 @@
 	"description": "Ask Bot to Fix the Drill",
 	"author": "Dr_Newbie",
 	"contact": "http://modwork.shop/17260",
-	"version": "10",
+	"version": "12",
 	"priority": 1,
-	"image": "logo.png",
 	"color": "0 0 0",
 	"blt_version": 2,
 	"hooks": [
