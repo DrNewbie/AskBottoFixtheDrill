@@ -1,3 +1,9 @@
+if Network:is_client() then
+	return
+end
+
+_G.CustomWaypoints = _G.CustomWaypoints or {}
+
 _G.Keepers = _G.Keepers or {}
 
 function PlayerStandard:_start_action_intimidate_alt(t, unit)
